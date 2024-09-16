@@ -4,9 +4,9 @@
 header('Content-Type: application/json');
 
 // MongoDB connection details
-$mongoUri = 'mongodb://localhost:27017'; // Adjust as needed
+$mongoUri = 'mongodb://localhost:27017/'; // Adjust as needed
 $databaseName = 'gunshot_db'; // Replace with your database name
-$collectionName = 'gunshot_data'; // Replace with your collection name
+$collectionName = 'gunshot_direction'; // Replace with your collection name
 
 try {
     // Create a MongoDB client instance
