@@ -95,6 +95,27 @@
             transform-origin: left center;
         }
 
+        .blinking-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0;
+            }
+        }
+
         table {
             width: 100%;
             max-width: 350px;
@@ -137,6 +158,8 @@
         <!-- Radar Box -->
         <div id="radar-box">
             <div class="radar-line"></div>
+            <!-- Blinking indicator for direction -->
+            <div id="blinking-indicator" class="blinking-indicator"></div>
         </div>
 
         <!-- Table for Timestamp and Direction -->
@@ -199,6 +222,9 @@
         function updateRadar(degree) {
             const radarLine = document.querySelector('.radar-line');
             radarLine.style.transform = `rotate(${degree}deg)`;
+
+            const indicator = document.getElementById('blinking-indicator');
+            indicator.style.transform = `rotate(${degree}deg)`;
         }
 
         function appendToTable(timestamp, direction) {
@@ -216,7 +242,7 @@
                 const data = await response.json();
                 const { timestamp, direction } = data;
 
-                updateRadar(direction);  // Update the radar line
+                updateRadar(direction);  // Update the radar line and blinking indicator
                 appendToTable(timestamp, direction);  // Update the table
             } catch (error) {
                 console.error('Error fetching data:', error);
