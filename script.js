@@ -55,19 +55,25 @@ function appendToTable(timestamp, direction) {
     tableBody.appendChild(newRow);
 }
 
-// Function to fetch data from the backend and update the radar and table
 async function fetchDataAndUpdateRadar() {
     try {
-        const response = await fetch('/gunshot-direction');
+        const response = await fetch('fetch_data.php');
         const data = await response.json();
         const { timestamp, direction } = data;
 
-        updateRadar(direction);  // Update the radar line
+        // Check for errors in the response
+        if (data.error) {
+            console.error(data.error);
+            return;
+        }
+
+        updateRadar(direction);  // Update the radar line and blinking indicator
         appendToTable(timestamp, direction);  // Update the table
     } catch (error) {
         console.error('Error fetching data:', error);
     }
 }
+
 
 // Initialize the page by adding degree marks, direction labels, and fetching data
 window.onload = function () {
